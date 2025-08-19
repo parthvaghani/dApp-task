@@ -190,9 +190,8 @@ export async function executeGaslessTransaction(
 
 // Utility function to check smart wallet balance
 export async function getSmartWalletBalance(): Promise<bigint> {
-    const publicClient = getPublicClient();
     const smartWalletAddress = await getSmartWalletAddress();
-    return await publicClient.getBalance({ address: smartWalletAddress });
+    return await getPublicClient().getBalance({ address: smartWalletAddress });
 }
 
 // Utility function to fund smart wallet (for testing)

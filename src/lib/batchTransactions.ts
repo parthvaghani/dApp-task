@@ -1,6 +1,6 @@
 "use client";
 
-import { encodeFunctionData, concatHex, type TransactionReceipt } from "viem";
+import { encodeFunctionData, type TransactionReceipt } from "viem";
 import { USDC_ABI, USDC_CONTRACT_ADDRESS, getPublicClient } from "@/lib/contracts";
 import { executeGaslessTransaction, getSmartWalletAddress } from "@/lib/zerodev";
 import type { Address } from "viem";
@@ -57,7 +57,7 @@ export async function executeBatchedApprovalAndTransfer(
             args: [spender, amount],
         });
 
-        const { hash: approvalHash, receipt: approvalReceipt } = await executeGaslessTransaction(USDC_CONTRACT_ADDRESS, approveData);
+        const { hash: approvalHash } = await executeGaslessTransaction(USDC_CONTRACT_ADDRESS, approveData);
         console.log("Approval transaction successful:", approvalHash);
 
         // Wait a moment for the approval to be processed

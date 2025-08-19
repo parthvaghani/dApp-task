@@ -40,7 +40,7 @@ export default function USDCFaucet({ isLoggedIn }: USDCFaucetProps) {
                 args: [amount]
             });
 
-            const { hash, receipt } = await executeGaslessTransaction(USDC_CONTRACT_ADDRESS, data);
+            const { hash } = await executeGaslessTransaction(USDC_CONTRACT_ADDRESS, data);
 
             setTxHash(hash);
             setStatus("success");

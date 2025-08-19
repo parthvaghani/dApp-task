@@ -114,7 +114,7 @@ export default function TokenTransfer({ isLoggedIn }: TokenTransferProps) {
                 args: [recipient as `0x${string}`, amountWei]
             });
 
-            const { hash, receipt } = await executeGaslessTransaction(USDC_CONTRACT_ADDRESS, data);
+            const { hash } = await executeGaslessTransaction(USDC_CONTRACT_ADDRESS, data);
 
             setTxHash(hash);
             setStatus("success");
@@ -124,7 +124,7 @@ export default function TokenTransfer({ isLoggedIn }: TokenTransferProps) {
             setAmount("");
             await fetchUSDCBalance();
 
-        } catch (error) {
+        } catch (error: unknown) {
             console.error("Transfer failed:", error);
             setStatus("error");
 
@@ -309,7 +309,7 @@ export default function TokenTransfer({ isLoggedIn }: TokenTransferProps) {
                         <span className="text-gray-800">1.0 USDC</span>
                     </div>
                     <p className="text-xs text-gray-500 mt-2">
-                        Click "Test Data" to auto-fill the form
+                        Click &quot;Test Data&quot; to auto-fill the form
                     </p>
                 </div>
             </div>

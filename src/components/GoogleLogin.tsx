@@ -14,15 +14,17 @@ export default function GoogleLogin({ onLoginStateChange }: GoogleLoginProps) {
     const [userEmail, setUserEmail] = useState<string>("");
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        initializeWeb3Auth();
+    const fetchUserInfo = useCallback(async () => {
+        try {
+            const userInfo = await web3auth.getUserInfo();
+            setUserEmail(userInfo.email || "User");
+        } catch (error) {
+            console.error("Failed to get user info:", error);
+            setUserEmail("User");
+        }
     }, []);
 
-    useEffect(() => {
-        onLoginStateChange?.(isLoggedIn);
-    }, [isLoggedIn, onLoginStateChange]);
-
-    const initializeWeb3Auth = async () => {
+    const initializeWeb3Auth = useCallback(async () => {
         try {
             await initWeb3Auth();
             setIsReady(true);
@@ -36,17 +38,15 @@ export default function GoogleLogin({ onLoginStateChange }: GoogleLoginProps) {
             console.error("Failed to initialize Web3Auth:", error);
             toast.error("Failed to initialize authentication");
         }
-    };
+    }, [fetchUserInfo]);
 
-    const fetchUserInfo = async () => {
-        try {
-            const userInfo = await web3auth.getUserInfo();
-            setUserEmail(userInfo.email || "User");
-        } catch (error) {
-            console.error("Failed to get user info:", error);
-            setUserEmail("User");
-        }
-    };
+    useEffect(() => {
+        initializeWeb3Auth();
+    }, [initializeWeb3Auth]);
+
+    useEffect(() => {
+        onLoginStateChange?.(isLoggedIn);
+    }, [isLoggedIn, onLoginStateChange]);
 
     const handleLogin = useCallback(async () => {
         if (!isReady || isLoading) return;
@@ -66,7 +66,7 @@ export default function GoogleLogin({ onLoginStateChange }: GoogleLoginProps) {
         } finally {
             setIsLoading(false);
         }
-    }, [isReady, isLoading]);
+    }, [isReady, isLoading, fetchUserInfo]);
 
     const handleLogout = useCallback(async () => {
         if (!isReady || isLoading) return;
