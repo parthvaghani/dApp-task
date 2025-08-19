@@ -1,36 +1,228 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ZeroDev dApp - Gasless Web3 Experience
 
-## Getting Started
+A modern decentralized application built with Next.js, Web3Auth, and ZeroDev that demonstrates seamless Google authentication with smart wallet creation and gasless token transactions on Polygon Amoy testnet.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+-  **Google SSO Authentication** - One-click login with Web3Auth
+-  **Smart Wallet Creation** - Automatic AA wallet creation via ZeroDev
+-  **Gasless Transactions** - Zero gas fees using ZeroDev's bundler
+-  **USDC Token Operations** - Transfer and manage USDC tokens
+-  **Batched Transactions** - Execute multiple actions in single transaction
+-  **Modern UI/UX** - Clean, responsive interface with real-time status
+-  **Transaction Tracking** - Monitor transactions with block explorer links
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 15** | React framework with App Router |
+| **React 19** | UI library with latest features |
+| **TypeScript** | Type-safe development |
+| **Web3Auth** | Social authentication (Google SSO) |
+| **ZeroDev** | Account Abstraction & gasless transactions |
+| **Polygon Amoy** | Testnet for development |
+| **Tailwind CSS** | Utility-first styling |
+| **React Hot Toast** | User notifications |
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Web3Auth account ([Sign up here](https://dashboard.web3auth.io/))
+- ZeroDev account ([Sign up here](https://dashboard.zerodev.app/))
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd my-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Edit `.env.local`:
+   ```env
+   # Web3Auth Configuration
+   NEXT_PUBLIC_WEB3AUTH_CLIENT_ID=your_web3auth_client_id_here
+
+   # ZeroDev Configuration
+   NEXT_PUBLIC_ZERODEV_PROJECT_ID=your_zerodev_project_id_here
+
+   # USDC Contract (Polygon Amoy)
+   NEXT_PUBLIC_USDC_CONTRACT=0xD464CC7367a7A39eb4b1E6643CDa262B0B0CfdA8
+   ```
+
+4. **Configure Web3Auth**
+   - Visit [Web3Auth Dashboard](https://dashboard.web3auth.io/)
+   - Create a new project
+   - Add `http://localhost:3000` to authorized origins
+   - Copy your Client ID to `.env.local`
+
+5. **Configure ZeroDev**
+   - Visit [ZeroDev Dashboard](https://dashboard.zerodev.app/)
+   - Create a new project
+   - Select Polygon Amoy network
+   - Copy your Project ID to `.env.local`
+
+6. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🎯 How It Works
+
+### 1. Authentication Flow
+```
+User clicks "Login with Google"
+→ Web3Auth handles OAuth
+→ Smart wallet created via ZeroDev
+→ User can perform gasless transactions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Gasless Transaction Flow
+```
+User initiates transaction
+→ ZeroDev bundles transaction
+→ Transaction executed on-chain
+→ User pays no gas fees
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Smart Wallet Benefits
+- **No seed phrases** - Social login creates wallet
+- **Gasless transactions** - ZeroDev covers gas costs
+- **Batch operations** - Multiple actions in one transaction
+- **Enhanced security** - Account abstraction features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── layout.tsx         # Root layout with providers
+│   ├── page.tsx           # Main application page
+│   └── globals.css        # Global styles
+├── components/            # React components
+│   ├── GoogleLogin.tsx    # Authentication component
+│   ├── WalletInfo.tsx     # Smart wallet display
+│   ├── TokenTransfer.tsx  # USDC transfer interface
+│   ├── BatchedActions.tsx # Batch transaction UI
+│   ├── USDCFaucet.tsx     # Test USDC minting
+│   └── TransactionStatus.tsx # Transaction monitoring
+├── lib/                   # Core libraries
+│   ├── web3auth.ts        # Web3Auth configuration
+│   ├── zerodev.ts         # ZeroDev smart wallet setup
+│   ├── contracts.ts       # Contract ABIs & helpers
+│   └── batchTransactions.ts # Batch transaction logic
+└── hooks/                 # Custom React hooks
+    └── useSmartWallet.ts  # Smart wallet state management
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🔧 Configuration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Supported Networks
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Currently configured for **Polygon Amoy Testnet**:
+- **Chain ID**: 80002
+- **RPC**: ZeroDev bundled endpoint
+- **Block Explorer**: [Oklink Amoy](https://www.oklink.com/amoy)
+- **Test Tokens**: Available via faucet
 
-## Deploy on Vercel
+### USDC Contract Details
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Address**: `0xD464CC7367a7A39eb4b1E6643CDa262B0B0CfdA8`
+- **Decimals**: 6
+- **Symbol**: USDC
+- **Type**: Test token for development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧪 Testing
+
+### Getting Test Tokens
+
+1. **MATIC (for gas fees)**
+   - Visit [Polygon Amoy Faucet](https://www.oklink.com/amoy/faucet)
+   - Request test MATIC
+
+2. **USDC (for testing)**
+   - Use the built-in faucet in the dApp
+   - Click "Mint 1000 USDC" after login
+
+### Test Data
+
+The app includes convenient test data:
+- **Test Recipient**: `0x742d35Cc6634C0532925a3b8D8C8EC29582f6442`
+- **Test Amount**: 1.0 USDC
+
+Use "Test Data" buttons to auto-fill forms.
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| **"Not authenticated"** | Check Web3Auth Client ID in `.env.local` |
+| **"Missing project ID"** | Verify ZeroDev Project ID configuration |
+| **Transaction failures** | Ensure sufficient MATIC for gas fees |
+| **Network errors** | Check RPC URL and network configuration |
+
+### Debug Mode
+
+Enable debug logging:
+1. Open browser console (F12)
+2. Look for Web3Auth initialization logs
+3. Check smart wallet creation logs
+4. Monitor transaction execution logs
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_WEB3AUTH_CLIENT_ID` | Web3Auth project client ID | ✅ |
+| `NEXT_PUBLIC_ZERODEV_PROJECT_ID` | ZeroDev project ID | ✅ |
+| `NEXT_PUBLIC_USDC_CONTRACT` | USDC contract address | ✅ |
+
+## 📚 Resources
+
+- [Web3Auth Documentation](https://web3auth.io/docs)
+- [ZeroDev Documentation](https://docs.zerodev.app/)
+- [Polygon Amoy Guide](https://wiki.polygon.technology/docs/amoy/)
+- [Next.js Documentation](https://nextjs.org/docs)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+If you need help:
+
+1. Check the troubleshooting section above
+2. Review browser console for error messages
+3. Verify environment variables are correct
+4. Ensure you're using Node.js 18+
+
+---
+
+**Note**: This is a demonstration application for educational purposes. Always test thoroughly before deploying to production.
