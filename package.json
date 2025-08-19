@@ -4,7 +4,7 @@
   "description": "A modern dApp built with Next.js, Web3Auth, and ZeroDev that demonstrates Google authentication with smart wallet creation and gasless token transactions on Polygon Amoy testnet.",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
