@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getEoaAddress, getSmartWalletAddress, getSmartWalletBalance } from "@/lib/zerodev";
 import { formatEther } from "viem";
 import { Copy, RefreshCw } from "lucide-react";
@@ -30,7 +30,8 @@ export default function WalletInfo({ isLoggedIn }: WalletInfoProps) {
         setSmartWalletBalance("");
     };
 
-    const fetchWalletInfo = async () => {
+    const fetchWalletInfo = useCallback(async () => {
+        if (!isLoggedIn) return;
         try {
             setIsLoading(true);
 
@@ -45,11 +46,10 @@ export default function WalletInfo({ isLoggedIn }: WalletInfoProps) {
             setSmartWalletBalance(formatEther(balance));
         } catch (error) {
             console.error("Failed to fetch wallet info:", error);
-            toast.error("Failed to load wallet information");
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [isLoggedIn]);
 
     const copyToClipboard = async (text: string, label: string) => {
         try {

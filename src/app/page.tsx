@@ -5,8 +5,7 @@ import GoogleLogin from "@/components/GoogleLogin";
 import WalletInfo from "@/components/WalletInfo";
 import TokenTransfer from "@/components/TokenTransfer";
 import BatchedActions from "@/components/BatchedActions";
-import USDCFaucet from "@/components/USDCFaucet";
-import { ChevronDown, ChevronRight, Wallet, Send, Zap, Coins } from "lucide-react";
+import { ChevronDown, ChevronRight, Wallet, Send, Zap } from "lucide-react";
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,7 +27,8 @@ export default function Home() {
             ZeroDev dApp
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Experience the future of Web3 with gasless transactions, smart wallets, and seamless Google authentication
+            Experience the future of Web3 with gasless transactions, smart
+            wallets, and seamless Google authentication
           </p>
         </div>
 
@@ -39,49 +39,22 @@ export default function Home() {
 
         {/* Main Content Grid */}
         <div className="max-w-7xl mx-auto space-y-6">
-          {/* Wallet Information - Always Visible */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-            <WalletInfo isLoggedIn={isLoggedIn} />
-          </div>
+          {/* Wallet Information - Show when logged in */}
+          {isLoggedIn && (
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+              <WalletInfo isLoggedIn={isLoggedIn} />
+            </div>
+          )}
 
           {/* Features Section - Only show when logged in */}
           {isLoggedIn && (
             <div className="space-y-6">
-              {/* USDC Faucet Section */}
-              <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                <button
-                  onClick={() => toggleSection('faucet')}
-                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                      <Coins className="w-5 h-5 text-white" />
-                    </div>
-                    <div className="text-left">
-                      <h3 className="text-lg font-semibold text-gray-900">USDC Faucet</h3>
-                      <p className="text-sm text-gray-600">Get test USDC tokens for development</p>
-                    </div>
-                  </div>
-                  {activeSection === 'faucet' ? (
-                    <ChevronDown className="w-5 h-5 text-gray-500" />
-                  ) : (
-                    <ChevronRight className="w-5 h-5 text-gray-500" />
-                  )}
-                </button>
-
-                {activeSection === 'faucet' && (
-                  <div className="px-6 pb-6 border-t border-gray-100">
-                    <USDCFaucet isLoggedIn={isLoggedIn} />
-                  </div>
-                )}
-              </div>
-
               {/* Transaction Features Grid */}
               <div className="grid lg:grid-cols-2 gap-6">
                 {/* USDC Transfer Section */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                   <button
-                    onClick={() => toggleSection('transfer')}
+                    onClick={() => toggleSection("transfer")}
                     className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center gap-3">
@@ -89,18 +62,22 @@ export default function Home() {
                         <Send className="w-5 h-5 text-white" />
                       </div>
                       <div className="text-left">
-                        <h3 className="text-lg font-semibold text-gray-900">USDC Transfer</h3>
-                        <p className="text-sm text-gray-600">Send USDC tokens gaslessly</p>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          USDC Transfer
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          Send USDC tokens gaslessly
+                        </p>
                       </div>
                     </div>
-                    {activeSection === 'transfer' ? (
+                    {activeSection === "transfer" ? (
                       <ChevronDown className="w-5 h-5 text-gray-500" />
                     ) : (
                       <ChevronRight className="w-5 h-5 text-gray-500" />
                     )}
                   </button>
 
-                  {activeSection === 'transfer' && (
+                  {activeSection === "transfer" && (
                     <div className="px-6 pb-6 border-t border-gray-100">
                       <TokenTransfer isLoggedIn={isLoggedIn} />
                     </div>
@@ -110,7 +87,7 @@ export default function Home() {
                 {/* Batched Actions Section */}
                 <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                   <button
-                    onClick={() => toggleSection('batched')}
+                    onClick={() => toggleSection("batched")}
                     className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                   >
                     <div className="flex items-center gap-3">
@@ -118,18 +95,22 @@ export default function Home() {
                         <Zap className="w-5 h-5 text-white" />
                       </div>
                       <div className="text-left">
-                        <h3 className="text-lg font-semibold text-gray-900">Batched Actions</h3>
-                        <p className="text-sm text-gray-600">Approve & transfer in one transaction</p>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          Batched Actions
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          Approve & transfer in one transaction
+                        </p>
                       </div>
                     </div>
-                    {activeSection === 'batched' ? (
+                    {activeSection === "batched" ? (
                       <ChevronDown className="w-5 h-5 text-gray-500" />
                     ) : (
                       <ChevronRight className="w-5 h-5 text-gray-500" />
                     )}
                   </button>
 
-                  {activeSection === 'batched' && (
+                  {activeSection === "batched" && (
                     <div className="px-6 pb-6 border-t border-gray-100">
                       <BatchedActions isLoggedIn={isLoggedIn} />
                     </div>

@@ -24,21 +24,44 @@ export default function GoogleLogin({ onLoginStateChange }: GoogleLoginProps) {
         }
     }, []);
 
+    const checkAuthStatus = useCallback(async () => {
+        // Multiple checks to ensure we catch the session properly
+        if (web3auth.connected && web3auth.provider) {
+            console.log("User is connected via web3auth.connected");
+            setIsLoggedIn(true);
+            await fetchUserInfo();
+        } else if (web3auth.provider) {
+            console.log("User has provider, checking connection status");
+            try {
+                // Try to get user info as a connection test
+                const userInfo = await web3auth.getUserInfo();
+                if (userInfo && userInfo.email) {
+                    console.log("User info retrieved, user is logged in");
+                    setIsLoggedIn(true);
+                    setUserEmail(userInfo.email);
+                }
+            } catch (error) {
+                console.log("No valid session found:", error);
+                setIsLoggedIn(false);
+            }
+        }
+    }, [fetchUserInfo]);
+
     const initializeWeb3Auth = useCallback(async () => {
         try {
             await initWeb3Auth();
             setIsReady(true);
 
-            // Check if user is already logged in
-            if (web3auth.provider) {
-                setIsLoggedIn(true);
-                await fetchUserInfo();
-            }
+            // Check auth status immediately after init
+            await checkAuthStatus();
+
+            // Also check after a short delay to catch any async session restoration
+            setTimeout(checkAuthStatus, 500);
         } catch (error) {
             console.error("Failed to initialize Web3Auth:", error);
             toast.error("Failed to initialize authentication");
         }
-    }, [fetchUserInfo]);
+    }, [checkAuthStatus]);
 
     useEffect(() => {
         initializeWeb3Auth();

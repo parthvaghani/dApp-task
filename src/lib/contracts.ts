@@ -2,7 +2,7 @@
 
 import { createPublicClient, http, type Address, getAddress } from "viem";
 
-const projectId = process.env.NEXT_PUBLIC_ZERODEV_PROJECT_ID || "a83fa6d6-2301-4ecd-8bc2-40a8e65eeaa8";
+const projectId = process.env.NEXT_PUBLIC_ZERODEV_PROJECT_ID || process.env.REACT_APP_ZERODEV_PROJECT_ID || "bbf7388d-98f1-413d-8366-de0e77dfd88e";
 
 // Define Polygon Amoy chain
 const polygonAmoy = {
@@ -143,8 +143,12 @@ export const USDC_ABI = [
   }
 ] as const;
 
-// USDC Contract Address (Polygon Amoy) - properly checksummed
-export const USDC_CONTRACT_ADDRESS = getAddress(process.env.NEXT_PUBLIC_USDC_CONTRACT || "0xD464CC7367a7A39eb4b1E6643CDa262B0B0CfdA8") as Address;
+// USDC Contract Address (Polygon Amoy) - properly checksummed  
+export const USDC_CONTRACT_ADDRESS = getAddress(
+  process.env.NEXT_PUBLIC_TOKEN_ADDRESS || 
+  process.env.REACT_APP_TOKEN_ADDRESS || 
+  "0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582"
+) as Address;
 
 // USDC has 6 decimals
 export const USDC_DECIMALS = 6;

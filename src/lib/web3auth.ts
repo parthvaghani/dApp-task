@@ -3,8 +3,8 @@
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, type SafeEventEmitterProvider } from "@web3auth/base";
 
-const clientId = process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID as string;
-const projectId = process.env.NEXT_PUBLIC_ZERODEV_PROJECT_ID || "a83fa6d6-2301-4ecd-8bc2-40a8e65eeaa8";
+const clientId = process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID || process.env.REACT_APP_WEB3AUTH_CLIENT_ID || "bbf7388d-98f1-413d-8366-de0e77dfd88e";
+const projectId = process.env.NEXT_PUBLIC_ZERODEV_PROJECT_ID || process.env.REACT_APP_ZERODEV_PROJECT_ID || "bbf7388d-98f1-413d-8366-de0e77dfd88e";
 
 // Only log errors in development to prevent build issues
 if (!clientId || clientId === "your_web3auth_client_id_here") {
@@ -18,6 +18,7 @@ export const web3auth = new Web3Auth({
 	web3AuthNetwork: "sapphire_devnet",
 	// Use browser-specific configuration to avoid React Native dependencies
 	enableLogging: false,
+	sessionTime: 86400, // 24 hours
 	uiConfig: {
 		uxMode: "popup",
 		logoLight: "/globe.svg",
@@ -45,6 +46,7 @@ export async function initWeb3Auth(): Promise<void> {
 		// Only initialize if we're in the browser and have a valid client ID
 		if (typeof window !== 'undefined' && clientId && clientId !== "your_web3auth_client_id_here") {
 			await web3auth.init();
+			console.log("Web3Auth initialized. Connected:", web3auth.connected, "Provider:", !!web3auth.provider);
 		}
 	} catch (error) {
 		console.error("Failed to initialize Web3Auth:", error);

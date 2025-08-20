@@ -1,14 +1,14 @@
-# ZeroDev dApp - Gasless Web3 Experience
+# ZeroDev dApp - Google Login + Gasless Transfer + Batched Actions
 
-A modern decentralized application built with Next.js, Web3Auth, and ZeroDev that demonstrates seamless Google authentication with smart wallet creation and gasless token transactions on Polygon Amoy testnet.
+A simple dApp built with Next.js, Web3Auth, and ZeroDev that demonstrates Google login, smart wallet creation, a gasless USDC transfer, and a batched approval + transfer in a single user operation on Polygon Amoy.
 
 ## ✨ Features
 
 -  **Google SSO Authentication** - One-click login with Web3Auth
 -  **Smart Wallet Creation** - Automatic AA wallet creation via ZeroDev
 -  **Gasless Transactions** - Zero gas fees using ZeroDev's bundler
--  **USDC Token Operations** - Transfer and manage USDC tokens
--  **Batched Transactions** - Execute multiple actions in single transaction
+-  **USDC Transfer** - Send USDC tokens gaslessly
+-  **Batched Approval + Transfer** - Single user operation with approval then transfer
 -  **Modern UI/UX** - Clean, responsive interface with real-time status
 -  **Transaction Tracking** - Monitor transactions with block explorer links
 
@@ -16,8 +16,8 @@ A modern decentralized application built with Next.js, Web3Auth, and ZeroDev tha
 
 | Technology | Purpose |
 |------------|---------|
-| **Next.js 15** | React framework with App Router |
-| **React 19** | UI library with latest features |
+| **Next.js** | React framework with App Router |
+| **React** | UI library |
 | **TypeScript** | Type-safe development |
 | **Web3Auth** | Social authentication (Google SSO) |
 | **ZeroDev** | Account Abstraction & gasless transactions |
@@ -39,7 +39,7 @@ A modern decentralized application built with Next.js, Web3Auth, and ZeroDev tha
 1. **Clone the repository**
    ```bash
    git clone <your-repo-url>
-   cd my-app
+   cd dApp-task
    ```
 
 2. **Install dependencies**
@@ -56,12 +56,8 @@ A modern decentralized application built with Next.js, Web3Auth, and ZeroDev tha
    ```env
    # Web3Auth Configuration
    NEXT_PUBLIC_WEB3AUTH_CLIENT_ID=your_web3auth_client_id_here
-
-   # ZeroDev Configuration
    NEXT_PUBLIC_ZERODEV_PROJECT_ID=your_zerodev_project_id_here
-
-   # USDC Contract (Polygon Amoy)
-   NEXT_PUBLIC_USDC_CONTRACT=0xD464CC7367a7A39eb4b1E6643CDa262B0B0CfdA8
+   NEXT_PUBLIC_TOKEN_ADDRESS=0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582
    ```
 
 4. **Configure Web3Auth**
@@ -143,27 +139,18 @@ Currently configured for **Polygon Amoy Testnet**:
 
 ### USDC Contract Details
 
-- **Address**: `0xD464CC7367a7A39eb4b1E6643CDa262B0B0CfdA8`
-- **Decimals**: 6
-- **Symbol**: USDC
-- **Type**: Test token for development
+- Address and ABI are configurable. Default contract is a test USDC on Amoy.
 
 ## 🧪 Testing
 
 ### Getting Test Tokens
 
-1. **MATIC (for gas fees)**
-   - Visit [Polygon Amoy Faucet](https://www.oklink.com/amoy/faucet)
-   - Request test MATIC
-
-2. **USDC (for testing)**
-   - Use the built-in faucet in the dApp
-   - Click "Mint 1000 USDC" after login
+- MATIC is not required for end users due to sponsorship, but the Paymaster/bundler may require project-side funding. If needed, use the Polygon Amoy faucet.
 
 ### Test Data
 
 The app includes convenient test data:
-- **Test Recipient**: `0x742d35Cc6634C0532925a3b8D8C8EC29582f6442`
+- **Test Recipient**: `0x1a9Ea0628868298b0e252D249deBb9ff91795341`
 - **Test Amount**: 1.0 USDC
 
 Use "Test Data" buttons to auto-fill forms.
@@ -193,7 +180,7 @@ Enable debug logging:
 |----------|-------------|----------|
 | `NEXT_PUBLIC_WEB3AUTH_CLIENT_ID` | Web3Auth project client ID | ✅ |
 | `NEXT_PUBLIC_ZERODEV_PROJECT_ID` | ZeroDev project ID | ✅ |
-| `NEXT_PUBLIC_USDC_CONTRACT` | USDC contract address | ✅ |
+| `NEXT_PUBLIC_TOKEN_ADDRESS` | Test token contract address | ✅ |
 
 ## 📚 Resources
 
